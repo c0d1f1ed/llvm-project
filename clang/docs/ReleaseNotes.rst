@@ -348,6 +348,25 @@ clang-format
     const x = foo ?? default;
     const z = foo?.bar?.baz;
 
+- Option ``IndentCaseBlocks`` has been added to support treating the block
+  following a switch case label as a scope block which gets indented itself.
+  It helps avoid having the closing bracket align with the switch statement's
+  closing bracket (when ``IndentCaseLabels`` is ``false``).
+
+  .. code-block:: c++
+  
+    switch (fool) {                vs.     switch (fool) {
+    case 1:                                case 1: {
+      {                                      bar();
+         bar();                            } break;
+      }                                    default: {
+      break;                                 plop();
+    default:                               }
+      {                                    }
+        plop();
+      }
+    }
+
 libclang
 --------
 

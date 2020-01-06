@@ -1610,7 +1610,8 @@ the configuration (without a prefix: ``Auto``).
 
   When ``false``, use the same indentation level as for the switch
   statement. Switch statement body is always indented one level more than
-  case labels.
+  case labels (except the first block following the case label, which
+  itself indents the code - unless IndentCaseBlocks is enabled).
 
   .. code-block:: c++
 
@@ -1622,6 +1623,28 @@ the configuration (without a prefix: ``Auto``).
      default:                                 default:
        plop();                                  plop();
      }                                      }
+
+**IndentCaseBlocks** (``bool``)
+  Indent case label blocks one level from the case label.
+
+  When ``false``, the block following the case label uses the same
+  indentation level as for the case label, treating the case label the same
+  as an if-statement.
+  When ``true``, the block gets indented as a scope block.
+ 
+  .. code-block:: c++
+     false:                                 true:
+     switch (fool) {                vs.     switch (fool) {
+     case 1: {                              case 1:
+       bar();                                 {
+     } break;                                   bar();
+     default: {                               }
+       plop();                                break;
+     }                                      default:
+     }                                        {
+                                                plop();
+                                              }
+                                            }
 
 **IndentGotoLabels** (``bool``)
   Indent goto labels.
